@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:id="@+id/relative_write"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/Fragment_editprofile_ed_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_5xl"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_s"
+                android:layout_marginEnd="@dimen/dim_m">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_register"
+                    android:hint="@string/name"
+                    android:inputType="text"
+                    android:textSize="@dimen/txt_size_m" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/Fragment_editprofile_ed_email"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_5xl"
+                android:layout_below="@id/Fragment_editprofile_ed_name"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_s"
+                android:layout_marginEnd="@dimen/dim_m">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_register"
+                    android:hint="@string/email_address"
+                    android:inputType="textEmailAddress"
+                    android:textSize="@dimen/txt_size_m" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/Fragment_editprofile_tv_birthdate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_editprofile_ed_email"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register"
+                android:drawableEnd="@drawable/date"
+                android:drawableRight="@drawable/date"
+                android:gravity="start|center"
+                android:paddingStart="@dimen/dim_s"
+                android:paddingEnd="@dimen/dim_s"
+                android:text="@string/birthdate" />
+
+            <RelativeLayout
+                android:id="@+id/Fragment_editprofile_rlt_sp_bloodtype"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_editprofile_tv_birthdate"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <Spinner
+                    android:id="@+id/Fragment_editprofile_sp_bloodtype"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dropdown" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/Fragment_editprofile_tv_last_donate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_editprofile_rlt_sp_bloodtype"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register"
+                android:drawableEnd="@drawable/date"
+                android:drawableRight="@drawable/date"
+                android:gravity="start|center"
+                android:paddingStart="@dimen/dim_s"
+                android:text="اخر معاد تبرع"
+                android:textSize="@dimen/txt_size_m" />
+
+            <RelativeLayout
+                android:id="@+id/Fragment_editprofile_rlt_sp_gov"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@+id/Fragment_editprofile_tv_last_donate"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <Spinner
+                    android:id="@+id/Fragment_editprofile_sp_gov"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dropdown">
+
+                </Spinner>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/Fragment_editprofile_rlt_sp_city"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_editprofile_rlt_sp_gov"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <Spinner
+                    android:id="@+id/Fragment_editprofile_sp_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dropdown">
+
+                </Spinner>
+
+            </RelativeLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/Fragment_editprofile_ed_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_5xl"
+                android:layout_below="@id/Fragment_editprofile_rlt_sp_city"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_s"
+                android:layout_marginEnd="@dimen/dim_m">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_register"
+                    android:hint="@string/phone"
+                    android:inputType="phone"
+                    android:textSize="@dimen/txt_size_m" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/Fragment_editprofile_ed_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_5xl"
+                android:layout_below="@id/Fragment_editprofile_ed_phone"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_s"
+                android:layout_marginEnd="@dimen/dim_m"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_register"
+                    android:hint="@string/password"
+                    android:inputType="textWebPassword"
+                    android:textSize="@dimen/txt_size_m" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/Fragment_editprofile_ed_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_5xl"
+                android:layout_below="@id/Fragment_editprofile_ed_password"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_s"
+                android:layout_marginEnd="@dimen/dim_m"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_register"
+                    android:hint="@string/confirmpassword"
+                    android:inputType="textWebPassword"
+                    android:textSize="@dimen/txt_size_m" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/Fragment_editprofile_btn_editprofile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Fragment_editprofile_ed_confirm_password"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@color/blue_black"
+                android:text="@string/edit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_l"
+                android:layout_below="@id/Fragment_editprofile_btn_editprofile" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/Fragment_post_card1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_m"
+        android:layout_marginTop="@dimen/dim_m"
+        android:layout_marginEnd="@dimen/dim_m">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/Fragment_post_tv_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dim_l"
+                android:text="@string/thewaytopeotect"
+                android:textSize="@dimen/txt_size_m"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/dim_m"
+                />
+
+            <ImageView
+                android:id="@+id/Fragment_post_image_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/likes"
+
+                />
+
+
+            <ImageView
+                android:id="@+id/Fragment_post_image_post"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/logo"
+                android:layout_marginTop="@dimen/dim_4xl"
+                android:src="@drawable/img1" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

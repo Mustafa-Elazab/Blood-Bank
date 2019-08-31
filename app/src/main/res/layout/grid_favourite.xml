@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/Fragment_favourite_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_m"
+        android:layout_marginEnd="@dimen/dim_m"
+        android:layout_marginTop="@dimen/dim_m"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/Fragment_favourite_relative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:id="@+id/Fragment_favourite_tv_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/thewaytopeotect"
+                    android:textSize="@dimen/txt_size_m"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/Fragment_favourite_image_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_favorite"
+                    android:layout_alignParentTop="true"
+
+                    />
+            </RelativeLayout>
+            <ImageView
+                android:id="@+id/Fragment_favourite_image_post"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/logo"
+                android:src="@drawable/img1"
+                android:layout_below="@id/Fragment_favourite_relative"
+                />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

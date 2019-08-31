@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_5xl"
+        android:layout_marginStart="@dimen/dim_l"
+        android:layout_marginEnd="@dimen/dim_l"
+        android:layout_marginTop="@dimen/dim_l"
+        android:background="@color/white"
+        >
+
+        <ImageView
+            android:id="@+id/list_notifications_rv_notifiy"
+            android:layout_width="@dimen/dim_3xl"
+            android:layout_height="@dimen/dim_3xl"
+            android:src="@drawable/notifications"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dim_l"
+            />
+
+        <TextView
+            android:id="@+id/list_notifications_rv_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="nkvbkbvkfb"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/txt_size_m"
+            />
+        <TextView
+            android:id="@+id/list_notifications_rv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="ndvkbv"
+            android:layout_centerVertical="true"
+            android:drawableEnd="@drawable/ic_access_time_black_24dp"
+            android:drawablePadding="@dimen/dim_s"
+            android:textSize="@dimen/txt_size_s"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+</RelativeLayout>

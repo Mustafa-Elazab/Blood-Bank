@@ -1,0 +1,100 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="dim_sss">1dp</dimen>
+
+    <dimen name="dim_ss">2dp</dimen>
+
+    <dimen name="dim_s">4dp</dimen>
+
+    <dimen name="dim_m">8dp</dimen>
+
+    <dimen name="dim_l">16dp</dimen>
+
+    <dimen name="dim_xl">24dp</dimen>
+
+    <dimen name="dim_2xl">32dp</dimen>
+
+    <dimen name="dim_3xl">40dp</dimen>
+
+    <dimen name="dim_4xl">48dp</dimen>
+
+    <dimen name="dim_5xl">56dp</dimen>
+
+    <dimen name="dim_6xl">64dp</dimen>
+
+    <dimen name="dim_7xl">72dp</dimen>
+
+    <dimen name="dim_8xl">80dp</dimen>
+
+    <dimen name="dim_9xl">88dp</dimen>
+
+    <dimen name="dim_10xl">96dp</dimen>
+
+    <dimen name="dim_11xl">104dp</dimen>
+
+    <dimen name="dim_12xl">112dp</dimen>
+
+    <dimen name="dim_13xl">120dp</dimen>
+
+    <dimen name="dim_16xl">120dp</dimen>
+
+    <dimen name="dim_17xl">128dp</dimen>
+
+    <dimen name="dim_18xl">136dp</dimen>
+
+    <dimen name="dim_19xl">144dp</dimen>
+
+    <dimen name="dim_20xl">154dp</dimen>
+
+    <dimen name="dim_21xl">162dp</dimen>
+
+    <dimen name="dim_22xl">170dp</dimen>
+
+    <dimen name="dim_23xl">178dp</dimen>
+
+    <dimen name="dim_24xl">186dp</dimen>
+
+    <dimen name="dim_25xl">194dp</dimen>
+
+    <dimen name="dim_26xl">202dp</dimen>
+
+    <dimen name="dim_27xl">250dp</dimen>
+
+    <dimen name="dim_28dp">28dp</dimen>
+
+    <dimen name="txt_size_sss">8sp</dimen>
+
+    <dimen name="txt_size_ss">10sp</dimen>
+
+    <dimen name="txt_size_s">12sp</dimen>
+
+    <dimen name="txt_size_m">16sp</dimen>
+
+    <dimen name="txt_size_l">20sp</dimen>
+
+    <dimen name="txt_size_ll">22sp</dimen>
+
+    <dimen name="txt_size_xl">24sp</dimen>
+
+    <dimen name="txt_size_2xl">28sp</dimen>
+
+    <dimen name="txt_size_3xl">32sp</dimen>
+
+    <dimen name="txt_size_4xl">36sp</dimen>
+
+    <dimen name="txt_size_5xl">40sp</dimen>
+
+    <dimen name="txt_size_6xl">44sp</dimen>
+
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="logo">200dp</dimen>
+    <dimen name="edittext_48">48dp</dimen>
+    <dimen name="slider_sim">400dp</dimen>
+    <dimen name="dim_tool_bar">55dp</dimen>
+</resources>

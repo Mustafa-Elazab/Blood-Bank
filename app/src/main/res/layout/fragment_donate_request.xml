@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash">
+
+
+    <RelativeLayout
+        android:id="@+id/Fragment_donate_request_relative"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_tool_bar"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/Fragment_donate_request_img_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dim_s"
+            android:src="@drawable/ic_menu_black_24dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/Fragment_donate_request_img_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dim_m"
+            android:src="@drawable/ic_notifications_none_black_24dp"
+
+            />
+
+        <TextView
+            android:id="@+id/Fragment_donate_request_Tool_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/txt_size_ll"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/Fragment_donate_request_img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dim_m"
+            android:src="@drawable/ic_black" />
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/Fragment_donate_request_relative"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:id="@+id/relative_write"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_m">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/Fragment_donate_request_ed_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/name"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:imeOptions="actionNext"
+                    android:padding="@dimen/dim_m"
+                    android:inputType="text"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+
+                android:id="@+id/Fragment_donate_request_ed_age"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_ed_name"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/age"
+                    android:maxLines="1"
+                    android:padding="@dimen/dim_m"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/Fragment_donate_request_sp_rlt_bloodtype"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_ed_age"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <Spinner
+                    android:id="@+id/Fragment_donate_request_sp_bloodtype"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dim_m" />
+            </RelativeLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+
+                android:id="@+id/Fragment_donate_request_ed_bloodbugs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_sp_rlt_bloodtype"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/bugs_number"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:padding="@dimen/dim_m"
+                    android:imeOptions="actionNext"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+
+                android:id="@+id/Fragment_donate_request_ed_hospital"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_ed_bloodbugs"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/hospital"
+                    android:maxLines="1"
+                    android:padding="@dimen/dim_m"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+
+                android:id="@+id/Fragment_donate_request_ed_hospital_address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_ed_hospital"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_5xl"
+                android:background="@drawable/edit_text_register"
+
+                >
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/hospital_address"
+                    android:maxLines="1"
+                    android:padding="@dimen/dim_m"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/Fragment_donate_request_img_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Fragment_donate_request_ed_hospital"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:src="@drawable/locations" />
+
+            <RelativeLayout
+                android:id="@+id/Fragment_donate_request_sp_relative_gov"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_ed_hospital_address"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <Spinner
+                    android:id="@+id/Fragment_donate_request_sp_gov"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_4xl" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/Fragment_donate_request_sp_relative_city"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_sp_relative_gov"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register">
+
+                <Spinner
+                    android:id="@+id/Fragment_donate_request_sp_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_4xl" />
+            </RelativeLayout>
+
+            <android.support.design.widget.TextInputLayout
+
+                android:id="@+id/Fragment_donate_request_ed_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_sp_relative_city"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register"
+
+
+                >
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/phone"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:padding="@dimen/dim_m"
+                    android:imeOptions="actionNext"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+
+                android:id="@+id/Fragment_donate_request_ed_note"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_ed_phone"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_m"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:background="@drawable/edit_text_register"
+
+                >
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/note"
+                    android:padding="@dimen/dim_m"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/Fragment_donate_request_btn_send"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_4xl"
+                android:layout_below="@id/Fragment_donate_request_ed_note"
+                android:layout_marginStart="@dimen/dim_m"
+                android:layout_marginTop="@dimen/dim_xl"
+                android:layout_marginEnd="@dimen/dim_m"
+                android:layout_marginBottom="@dimen/dim_xl"
+                android:background="@color/blue_black"
+                android:text="@string/send"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_size_ll" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">z
+
+        <RelativeLayout
+            android:id="@+id/relative_write"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <RelativeLayout
+                android:id="@+id/Fragment_contactus_rlt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/Fragment_contactus_img_logo"
+                    android:layout_width="@dimen/logo"
+                    android:layout_height="@dimen/logo"
+                    android:src="@drawable/logo256"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dim_m"
+                    />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dim_m"
+                    android:layout_below="@id/Fragment_contactus_img_logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layoutDirection="rtl"
+                    android:paddingStart="@dimen/dim_m"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/Fragment_contactus_img_phone"
+                            android:src="@drawable/phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/Fragment_contactus_tv_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="الجوال : "
+                            android:textSize="@dimen/txt_size_l"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@id/Fragment_contactus_img_phone"
+                            android:padding="@dimen/dim_s"
+                            />
+
+                            <TextView
+                                android:id="@+id/Fragment_contactus_tv_phone_api"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/Fragment_contactus_tv_phone"
+                                android:padding="@dimen/dim_s"
+                                android:textSize="@dimen/txt_size_m"
+                                android:layout_centerVertical="true"
+                                />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:layout_marginTop="@dimen/dim_m"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/Fragment_contactus_rlt_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/Fragment_contactus_img_email"
+                                android:src="@drawable/email"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/Fragment_contactus_tv_email"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="البريد الالكتروني : "
+                                android:textSize="@dimen/txt_size_l"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/Fragment_contactus_img_email"
+                                android:padding="@dimen/dim_s"
+                                />
+
+                            <TextView
+                                android:id="@+id/Fragment_contactus_tv_email_api"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/Fragment_contactus_tv_email"
+                                android:padding="@dimen/dim_s"
+                                android:textSize="@dimen/txt_size_m" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+            </RelativeLayout>
+
+           <LinearLayout
+               android:id="@+id/Fragment_contactus_linear_social"
+               android:layout_below="@id/Fragment_contactus_rlt"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_marginStart="@dimen/dim_4xl"
+               android:layout_marginEnd="@dimen/dim_4xl"
+               android:layout_marginTop="@dimen/dim_m"
+               >
+
+               <ImageView
+                   android:id="@+id/Fragment_contactus_img_facebook"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/facebook"
+                   android:layout_marginStart="@dimen/dim_m"
+                   android:layout_marginEnd="@dimen/dim_m"
+                   android:layout_marginTop="@dimen/dim_m"
+                   />
+               <ImageView
+                   android:id="@+id/Fragment_contactus_img_twitter"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/twitter"
+                   android:layout_marginStart="@dimen/dim_m"
+                   android:layout_marginEnd="@dimen/dim_m"
+                   android:layout_marginTop="@dimen/dim_m"
+                   />
+               <ImageView
+                   android:id="@+id/Fragment_contactus_img_youtube"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/youtube"
+                   android:layout_marginStart="@dimen/dim_m"
+                   android:layout_marginEnd="@dimen/dim_m"
+                   android:layout_marginTop="@dimen/dim_m"
+                   />
+               <ImageView
+                   android:id="@+id/Fragment_contactus_img_instagram"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/instagram"
+                   android:layout_marginStart="@dimen/dim_m"
+                   android:layout_marginEnd="@dimen/dim_m"
+                   android:layout_marginTop="@dimen/dim_m"
+                   />
+               <ImageView
+                   android:id="@+id/Fragment_contactus_img_whatsapp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/whatapp"
+                   android:layout_marginStart="@dimen/dim_m"
+                   android:layout_marginEnd="@dimen/dim_m"
+                   android:layout_marginTop="@dimen/dim_m"
+                   />
+               <ImageView
+                   android:id="@+id/Fragment_contactus_img_google"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/google"
+                   android:layout_marginStart="@dimen/dim_m"
+                   android:layout_marginEnd="@dimen/dim_m"
+                   android:layout_marginTop="@dimen/dim_m"
+                   />
+
+           </LinearLayout>
+
+            <Button
+                android:id="@+id/Fragment_contactus_btn_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Fragment_contactus_linear_social"
+                android:layout_marginTop="@dimen/dim_m"
+                android:background="@color/blue_black"
+                android:text="@string/contactwithus"
+                android:textSize="@dimen/txt_size_l"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                />
+
+            <RelativeLayout
+                android:layout_below="@id/Fragment_contactus_btn_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_m">
+
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/Fragment_contactus_ed_msg_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_5xl"
+                    android:layout_marginStart="@dimen/dim_m"
+                    android:layout_marginTop="@dimen/dim_s"
+                    android:layout_marginEnd="@dimen/dim_m"
+                    >
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_text_register"
+                        android:hint="@string/messagetitle"
+                        android:inputType="text"
+                        android:textSize="@dimen/txt_size_m" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/Fragment_contactus_ed_msg_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_8xl"
+                    android:layout_marginStart="@dimen/dim_m"
+                    android:layout_marginTop="@dimen/dim_s"
+                    android:layout_marginEnd="@dimen/dim_m"
+                    android:layout_below="@id/Fragment_contactus_ed_msg_title"
+                    >
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edit_text_register"
+                        android:hint="@string/messagecontent"
+                        android:inputType="text"
+                        android:textSize="@dimen/txt_size_m"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <Button
+                    android:id="@+id/Fragment_contactus_btn_send"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/Fragment_contactus_ed_msg_content"
+                    android:layout_marginStart="@dimen/dim_l"
+                    android:layout_marginTop="@dimen/dim_l"
+                    android:layout_marginBottom="@dimen/dim_l"
+                    android:layout_marginEnd="@dimen/dim_l"
+                    android:background="@color/blue_black"
+                    android:text="@string/send"
+                    android:textSize="@dimen/txt_size_l"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

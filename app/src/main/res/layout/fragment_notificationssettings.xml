@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="UselessLeaf"
+    android:background="@color/gray">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dim_m">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_blood_type"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dim_m"
+                    android:layout_marginTop="@dimen/dim_m"
+                    android:layout_marginBottom="@dimen/dim_m"
+                    android:text="نوع الدم"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/settingNotificationFragmentBloodTypeGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:horizontalSpacing="@dimen/dim_m"
+                android:numColumns="3"
+                android:verticalSpacing="@dimen/dim_m" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_blood_type"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/dim_m">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dim_m"
+                    android:layout_marginTop="@dimen/dim_m"
+                    android:layout_marginBottom="@dimen/dim_m"
+                    android:text="المحافظة"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/settingNotificationFragmentGovernortesGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:horizontalSpacing="@dimen/dim_m"
+                android:numColumns="3"
+                android:verticalSpacing="@dimen/dim_m" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/settingNotificationFragmentSaveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dim_m"
+            android:background="@color/blue_black"
+            android:text="@string/save"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+</LinearLayout>

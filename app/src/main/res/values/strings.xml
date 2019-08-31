@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">bloodbank</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_blood_bank">BloodBankActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">ادوات</string>
+    <string name="menu_share">شارك</string>
+    <string name="menu_send">ابعت</string>
+    <string name="remember_me">تذكرني</string>
+    <string name="copy_right">جميع الحقوق محفوظة</string>
+    <string name="email_address">البريد الالكتروني</string>
+    <string name="name">الاسم</string>
+    <string name="birthdate">تاريخ الميلاد</string>
+    <string name="phone">رقم الهاتف</string>
+    <string name="password">كلمة المرور</string>
+    <string name="confirmpassword">تأكيد كلمة المرور</string>
+    <string name="forget_password">هل نسيت كلمة المرور</string>
+    <string name="skip">تخطي</string>
+    <string name="profile">معلوماتي</string>
+    <string name="notifications">اعدادات الاشعارات</string>
+    <string name="favourite">المفضلة</string>
+    <string name="home">الرئسية</string>
+    <string name="instructionssettings">تعليمات الاستخدام</string>
+    <string name="contactus">تواصل معانا</string>
+    <string name="aboutapp">عن التطبيق</string>
+    <string name="signout">تسجيل الخروج</string>
+    <string name="ratingapponstore">تقيم التطبيق علي المتجر</string>
+    <string name="thewaytopeotect">طريقة الوقاية من الامراض</string>
+    <string name="send">ارسال</string>
+    <string name="contactwithus">تواصل معنا</string>
+    <string name="messagetitle">عنوان الرساله</string>
+    <string name="messagecontent">محتوي الرساله</string>
+    <string name="Patientname">اسم الحالة</string>
+    <string name="hospital">مستشفي :</string>
+    <string name="city">المدينة :</string>
+    <string name="detail">التفاصيل</string>
+    <string name="call">اتصال</string>
+    <string name="Favourite">المفضلة</string>
+    <string name="donate_request">طلب التبرع</string>
+    <string name="age">العمر</string>
+    <string name="bloodtype">فصيلة الدم</string>
+    <string name="hospital_address">عنوان المستشفي</string>
+    <string name="note">ملاحظات</string>
+    <string name="notificationsettings">اعداد الاشعارات</string>
+    <string name="save">حفظ</string>
+    <string name="edit">تعديل</string>
+    <string name="bugs_number">عدد الاكياس</string>
+    <string name="cancel">الغاء</string>
+    <string name="title_activity_maps">خريطة</string>
+    <string name="articals">المقالات</string>
+    <string name="donation_request">طلبات التبرع</string>
+    <string name="patientname">اسم المريض</string>
+    <string name="goverminate">المحافظة</string>
+
+</resources>

@@ -18,14 +18,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mustafa.bloodbank.R;
-import com.example.mustafa.bloodbank.adapter.POST_FRAGMENT_ADAPTER;
+import com.example.mustafa.bloodbank.adapter.ArticalAdapter;
 import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
-import com.example.mustafa.bloodbank.data.model.categories.Categories;
-import com.example.mustafa.bloodbank.data.model.post_filter.PostFilter;
-import com.example.mustafa.bloodbank.data.model.posts.Datum;
-import com.example.mustafa.bloodbank.data.model.posts.Posts;
+import com.example.mustafa.bloodbank.data.models.artical.Artical;
+import com.example.mustafa.bloodbank.data.models.artical.ArticalData;
+import com.example.mustafa.bloodbank.data.models.gerneral.GeneralResponse;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
+import com.example.mustafa.bloodbank.helper.HelperMethods;
+import com.example.mustafa.bloodbank.helper.OnEndless;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,33 +40,38 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.support.constraint.Constraints.TAG;
 import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.USER_API_TOKEN;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class postsFragment extends Fragment {
+public class postsFragment extends BaseFragment {
 
 
     @BindView(R.id.Fragment_post_spinner)
     Spinner FragmentPostSpinner;
     @BindView(R.id.Fragment_post_recyclerview)
     RecyclerView FragmentPostRecyclerview;
-    Unbinder unbinder;
     @BindView(R.id.Fragment_posts_img_search)
     ImageView FragmentPostsImgSearch;
     @BindView(R.id.Fragment_post_ed_search)
     EditText FragmentPostEdSearch;
     @BindView(R.id.Fragment_post_relative)
     LinearLayout FragmentPostRelative;
+    Unbinder unbinder;
     private API ApiServices;
-    private POST_FRAGMENT_ADAPTER adapter;
-    private String api_token;
+    private ArticalAdapter adapter;
+    private String api_token = "";
     private int categorie_id;
     private List<Integer> ids;
     private String keyword;
-    private Posts postsResponse;
+    private List<ArticalData> articalData=new ArrayList<>();
+    private List<ArticalData> data;
+    private Integer max = 0;
+    private OnEndless onEndless;
+    private int finalCurrent_page = 0;
+    private boolean checkFilterPost = true;
+
 
     public postsFragment() {
         // Required empty public constructor
@@ -75,41 +82,31 @@ public class postsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SetUpAvtivity();
         View view = inflater.inflate(R.layout.fragment_posts, container, false);
-
         unbinder = ButterKnife.bind(this, view);
-
         api_token = SharedPreferencesManger.LoadData(getActivity(), USER_API_TOKEN);
         ApiServices = RetrofitClient.getClient().create(API.class);
-        SetupRecyclerView();
-        getData();
+        Log.i( "apiToken",api_token);
+        getData(1);
         getCategories();
+        SetupRecyclerView();
         return view;
     }
 
     private void getCategories() {
-
-        ApiServices.getcategories().enqueue(new Callback<Categories>() {
+        ApiServices.getcategories().enqueue(new Callback<GeneralResponse>() {
             @Override
-            public void onResponse(Call<Categories> call, Response<Categories> response) {
-
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
                 if (response.body().getStatus() == 1) {
-
                     try {
-
-                        Categories body = response.body();
-
                         List<String> categories = new ArrayList<>();
                         ids = new ArrayList<>();
                         categories.add("كل المقالات");
                         ids.add(0);
-
-
                         for (int i = 0; i < response.body().getData().size(); i++) {
-
                             categories.add(response.body().getData().get(i).getName());
                             ids.add(response.body().getData().get(i).getId());
-
                             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                                     android.R.layout.simple_spinner_item, categories
                             );
@@ -118,13 +115,10 @@ public class postsFragment extends Fragment {
                             FragmentPostSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                                     if (position == 0) {
-
                                     } else {
                                         categorie_id = ids.get(position);
                                     }
-
                                 }
 
                                 @Override
@@ -132,8 +126,6 @@ public class postsFragment extends Fragment {
 
                                 }
                             });
-
-
                         }
 
                     } catch (Exception e) {
@@ -143,56 +135,65 @@ public class postsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Categories> call, Throwable t) {
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
 
             }
         });
     }
 
 
-    private void getData() {
-
-
-        ApiServices.getposts(api_token, 1).enqueue(new Callback<Posts>() {
+    private void getData(int page) {
+        ApiServices.getposts(api_token, page).enqueue(new Callback<Artical>() {
             @Override
-            public void onResponse(Call<Posts> call, Response<Posts> response) {
+            public void onResponse(Call<Artical> call, Response<Artical> response) {
+//                Log.i("onPostData",response.body().getData().getData().toString());
+                try{
 
-                if (response.body().getStatus() == 1) {
-                    try {
-
-                        postsResponse = response.body();
-                        viewposts(postsResponse);
-
-                    } catch (Exception e) {
-
-                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                    if (response.body().getStatus()==1) {
+                        data = response.body().getData().getData();
+                        max = response.body().getData().getLastPage();
+                        finalCurrent_page=response.body().getData().getCurrentPage();
+                        articalData.addAll(data);
+                        adapter.notifyDataSetChanged();
                     }
-
+                }catch (Exception e){
+                    e.getMessage();
                 }
+
             }
 
             @Override
-            public void onFailure(Call<Posts> call, Throwable t) {
+            public void onFailure(Call<Artical> call, Throwable t) {
 
             }
         });
     }
 
-    private void viewposts(Posts postsResponse) {
 
-        List<Datum> data = postsResponse.getData().getData();
 
-        adapter.getData(data);
-        adapter.notifyDataSetChanged();
-    }
 
     private void SetupRecyclerView() {
-
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         FragmentPostRecyclerview.setLayoutManager(manager);
 
-        adapter = new POST_FRAGMENT_ADAPTER(getContext(),getActivity());
+        onEndless = new OnEndless(manager, 1) {
+            @Override
+            public void onLoadMore(int current_page) {
+
+                if (current_page <= max || max != 0 || current_page == 1) {
+                    if (checkFilterPost) {
+                        getData(1);
+                    } else {
+                        getDataFilter(1);
+                    }
+                }
+            }
+        };
+        FragmentPostRecyclerview.addOnScrollListener(onEndless);
+        adapter=new ArticalAdapter(getActivity(),getActivity(),articalData);
         FragmentPostRecyclerview.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -202,52 +203,45 @@ public class postsFragment extends Fragment {
     }
 
 
-    private void getPostsFilter() {
-
-
-        String keyword = FragmentPostEdSearch.getText().toString();
-
-
-        List<Datum> data = postsResponse.getData().getData();
-        adapter.getData(data);
-        adapter.notifyDataSetChanged();
-
-
-        try {
-
-
-            ApiServices.getpostfilter(api_token, 1, keyword, categorie_id).enqueue(new Callback<Posts>() {
-                @Override
-                public void onResponse(Call<Posts> call, Response<Posts> response) {
-
-
-                    if (response.body().getStatus() == 1) {
-
-                        Posts postsResponse = response.body();
-                        viewposts(postsResponse);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Posts> call, Throwable t) {
-
-                }
-            });
-
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
     @OnClick(R.id.Fragment_posts_img_search)
     public void onViewClicked() {
 
         if (categorie_id == 0 && keyword == "") {
-            getData();
+            getData(1);
         } else {
-            getPostsFilter();
+             getDataFilter(1);
         }
+    }
+
+    private void getDataFilter(int page) {
+
+        keyword = FragmentPostEdSearch.getText().toString();
+
+        ApiServices.getpostfilter(api_token,page,keyword,categorie_id).enqueue(new Callback<Artical>() {
+            @Override
+            public void onResponse(Call<Artical> call, Response<Artical> response) {
+            try {
+                if (response.body().getStatus()==1) {
+                    List<ArticalData> data = response.body().getData().getData();
+                    articalData.addAll(data);
+                    adapter.notifyDataSetChanged();
+                }
+
+            }catch (Exception e){
+                e.getMessage();
+            }
+            }
+
+            @Override
+            public void onFailure(Call<Artical> call, Throwable t) {
+
+            }
+        });
+    }
+    @Override
+    public void onBack() {
+        homeFragment homeFragment = new homeFragment();
+        HelperMethods.replace(homeFragment,getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
     }
 }
 

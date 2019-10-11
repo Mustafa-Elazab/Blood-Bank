@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-
     <RelativeLayout
         android:id="@+id/Fragment_detail_relative"
         android:layout_width="match_parent"
@@ -53,21 +50,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layoutDirection="rtl"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dim_sss"
-                android:layout_marginStart="@dimen/dim_m"
-                android:layout_marginTop="@dimen/dim_xl"
-                android:layout_marginEnd="@dimen/dim_m"
-                android:background="@color/gray_dark" />
+
 
             <TextView
                 android:id="@+id/Fragment_detail_tv_name"
@@ -83,7 +74,7 @@
 
                 />
 
-            <View
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_sss"
                 android:layout_marginStart="@dimen/dim_m"
@@ -105,7 +96,7 @@
 
                 />
 
-            <View
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_sss"
                 android:layout_marginStart="@dimen/dim_m"
@@ -130,7 +121,7 @@
 
                 />
 
-            <View
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_sss"
                 android:layout_marginStart="@dimen/dim_m"
@@ -152,7 +143,7 @@
 
                 />
 
-            <View
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_sss"
                 android:layout_marginStart="@dimen/dim_m"
@@ -176,7 +167,7 @@
 
                 />
 
-            <View
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_sss"
                 android:layout_marginStart="@dimen/dim_m"
@@ -200,7 +191,7 @@
 
                 />
 
-            <View
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_sss"
                 android:layout_marginStart="@dimen/dim_m"
@@ -232,9 +223,8 @@
                 android:layout_marginTop="@dimen/dim_l"
                 android:layout_marginEnd="@dimen/dim_m"
                 android:background="@drawable/shape_notes_border"
-                android:paddingStart="@dimen/dim_m"
+                android:padding="@dimen/dim_m"
                 android:text="الاسم"
-                android:textAllCaps="false"
                 android:textSize="@dimen/txt_size_l"
                 android:textStyle="bold"
                 />
@@ -244,7 +234,7 @@
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dim_12xl"
+                android:layout_height="@dimen/dim_20xl"
                 android:layout_marginStart="@dimen/dim_m"
                 android:layout_marginEnd="@dimen/dim_m"
                 android:layout_marginTop="@dimen/dim_xl"/>
@@ -253,9 +243,9 @@
                 android:id="@+id/Fragment_detail_btn_call"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dim_l"
+                android:layout_marginStart="@dimen/dim_m"
                 android:layout_marginTop="@dimen/dim_xl"
-                android:layout_marginEnd="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_m"
                 android:layout_marginBottom="@dimen/dim_xl"
                 android:background="@color/green"
                 android:drawableStart="@drawable/phone"
@@ -265,8 +255,6 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-
 
         </LinearLayout>
     </ScrollView>

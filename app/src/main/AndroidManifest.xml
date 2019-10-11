@@ -1,37 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mustafa.bloodbank">
 
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="com.ipda3.onev2.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
+        tools:ignore="GoogleAppIndexingWarning">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -39,8 +33,7 @@
         <activity
             android:name=".ui.activity.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:parentActivityName=".ui.activity.HomeActivity"
-            ></activity>
+            android:parentActivityName=".ui.activity.HomeActivity" />
         <activity android:name=".ui.activity.splashcycle.SliderActivity" />
         <activity android:name=".ui.activity.UserCycleActivity" />
         <activity android:name=".ui.activity.HomeActivity" />
@@ -53,48 +46,30 @@
         </activity>
 
         <service
-
             android:name=".helper.server.MyFirebaseMessagingService"
-
             android:permission="com.google.android.c2dm.permission.SEND">
-
             <intent-filter>
-
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
-
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
             </intent-filter>
-
         </service>
-
         <service android:name=".helper.server.MyFirebaseInstanceIDService">
-
             <intent-filter>
-
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-
             </intent-filter>
-
         </service>
 
         <meta-data
-
             android:name="com.google.firebase.messaging.default_notification_icon"
-
             android:resource="@mipmap/ic_launcher" />
-
         <meta-data
-
             android:name="com.google.firebase.messaging.default_notification_color"
-
             android:resource="@color/colorAccent" />
-
         <meta-data
-
             android:name="com.google.android.gms.version"
-
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".ui.activity.BaseActivity"></activity>
     </application>
 
 </manifest>

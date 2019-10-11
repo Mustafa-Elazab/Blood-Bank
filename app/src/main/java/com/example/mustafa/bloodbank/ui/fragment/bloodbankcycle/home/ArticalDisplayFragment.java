@@ -14,12 +14,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.mustafa.bloodbank.R;
 import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
-import com.example.mustafa.bloodbank.data.model.posts.Datum;
-import com.example.mustafa.bloodbank.data.model.posttogglefavourite.PostToggleFavourite;
+import com.example.mustafa.bloodbank.data.models.artical.ArticalData;
+import com.example.mustafa.bloodbank.data.models.posttogglefavourite.PostToggleFavourite;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
 import com.example.mustafa.bloodbank.helper.HelperMethods;
-import com.example.mustafa.bloodbank.ui.activity.HomeActivity;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
 import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.NotificationsFragment;
 
 import butterknife.BindView;
@@ -35,10 +35,8 @@ import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.U
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ArticalDisplayFragment extends Fragment {
-
-
-    public Datum articaldata;
+public class ArticalDisplayFragment extends BaseFragment {
+    public ArticalData articaldata;
     @BindView(R.id.Fragment_Display_Artical_image_post)
     ImageView FragmentDisplayArticalImagePost;
     @BindView(R.id.Fragment_Display_Artical_tv_post_post)
@@ -59,6 +57,7 @@ public class ArticalDisplayFragment extends Fragment {
     ImageView FragmetDisplayArticalImgBack;
     Unbinder unbinder;
     private API ApiServices;
+    private String api_token="";
 
     public ArticalDisplayFragment() {
 
@@ -70,30 +69,27 @@ public class ArticalDisplayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SetUpAvtivity();
         View view = inflater.inflate(R.layout.fragment_display_artical, container, false);
-
         unbinder = ButterKnife.bind(this, view);
-
         ApiServices= RetrofitClient.getClient().create(API.class);
-
         FragmetDisplayArticalImgMenu.setVisibility(View.INVISIBLE);
         FragmetDisplayArticalImgNotifications.setVisibility(View.VISIBLE);
         FragmetDisplayArticalImgBack.setVisibility(View.VISIBLE);
         FragmetDisplayArticalToolBarTitle.setText(articaldata.getTitle());
-
         getArticalDetail();
-
         return view;
     }
 
     private void getArticalDetail() {
-
         Glide.with(getContext()).load(articaldata.getThumbnailFullPath()).into(FragmentDisplayArticalImagePost);
         FragmentDisplayArticalTvPost.setText(articaldata.getTitle());
         FragmentDisplayArticalTvPostPost.setText(articaldata.getContent());
-
-
-
+        if (articaldata.getIsFavourite()) {
+            FragmentDisplayArticalImageLike.setImageResource(R.drawable.ic_favorite);
+        } else {
+            FragmentDisplayArticalImageLike.setImageResource(R.drawable.likes);
+        }
     }
 
     @Override
@@ -110,25 +106,32 @@ public class ArticalDisplayFragment extends Fragment {
         FragmentDisplayArticalImageLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                ApiServices.addposttogglefavourite(articaldata.getId(), SharedPreferencesManger.LoadData(getActivity(),USER_API_TOKEN))
+                api_token=SharedPreferencesManger.LoadData(getActivity(),USER_API_TOKEN);
+                ApiServices.addposttogglefavourite(articaldata.getId(),api_token)
                         .enqueue(new Callback<PostToggleFavourite>() {
                             @Override
                             public void onResponse(Call<PostToggleFavourite> call, Response<PostToggleFavourite> response) {
 
                                 if (response.body().getStatus()==1) {
 
+                                    articaldata.setIsFavourite(!articaldata.getIsFavourite());
+                                    if (articaldata.getIsFavourite()) {
 
+                                        FragmentDisplayArticalImageLike.setImageResource(R.drawable.ic_favorite);
+                                        Toast.makeText(getActivity(), "تم الاضافه", Toast.LENGTH_SHORT).show();
+                                    } else {
+
+                                        FragmentDisplayArticalImageLike.setImageResource(R.drawable.likes);
+                                        Toast.makeText(getActivity(), "تم الازالة", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 else {
 
                                     articaldata.setIsFavourite(!articaldata.getIsFavourite());
                                     if(articaldata.getIsFavourite()){
-
                                         FragmentDisplayArticalImageLike.setImageResource(R.drawable.ic_favorite);
                                         Toast.makeText(getActivity(), "تم الاضافة", Toast.LENGTH_SHORT).show();
                                     }else {
-
                                         FragmentDisplayArticalImageLike.setImageResource(R.drawable.likes);
                                         Toast.makeText(getActivity(), "تم الازالة", Toast.LENGTH_SHORT).show();
                                     }
@@ -152,7 +155,6 @@ public class ArticalDisplayFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.Fragmet_Display_Artical_img_notifications:
-
                 NotificationsFragment notificationsFragment=new NotificationsFragment();
                 HelperMethods.replace(notificationsFragment,getActivity().getSupportFragmentManager(),R.id.frame_home_cycle,null,null);
                 break;
@@ -161,5 +163,11 @@ public class ArticalDisplayFragment extends Fragment {
                 HelperMethods.replace(homeFragment,getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
                 break;
         }
+    }
+
+    @Override
+    public void onBack() {
+        homeFragment homeFragment = new homeFragment();
+        HelperMethods.replace(homeFragment,getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
     }
 }

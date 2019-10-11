@@ -12,11 +12,16 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.mustafa.bloodbank.R;
+import com.example.mustafa.bloodbank.adapter.AdapterGridView;
 import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
-import com.example.mustafa.bloodbank.data.model.notificationssettings.NotificationsSettings;
+import com.example.mustafa.bloodbank.data.models.gerneral.GeneralResponse;
+import com.example.mustafa.bloodbank.data.models.gerneral.GeneralResponseData;
+import com.example.mustafa.bloodbank.data.models.notificationssettings.NotificationsSettings;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
-import com.google.android.gms.common.api.Api;
+import com.example.mustafa.bloodbank.helper.HelperMethods;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
+import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.home.homeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,25 +34,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.LoadData;
 import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.USER_API_TOKEN;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NotificationsettingsFragment extends Fragment {
-
-
+public class NotificationsettingsFragment extends BaseFragment {
     @BindView(R.id.settingNotificationFragmentBloodTypeGrid)
     GridView settingNotificationFragmentBloodTypeGrid;
     @BindView(R.id.settingNotificationFragmentGovernortesGrid)
     GridView settingNotificationFragmentGovernortesGrid;
     @BindView(R.id.settingNotificationFragmentSaveBtn)
     Button settingNotificationFragmentSaveBtn;
-    Unbinder unbinder;
+    private AdapterGridView adapterGovernortGridView;
+    private AdapterGridView adapterBloodTypeGridView;
+    private List<GeneralResponseData> governortareGeneratedModelArrayList = new ArrayList<>();
+    // var adapter grid view  blood Type
+    private List<GeneralResponseData> bloodTypeGeneratedModelArrayList = new ArrayList<>();
+    private List<Integer> idBloodType = new ArrayList<>();
+    private List<Integer> idGovernorates = new ArrayList<>();
     private API ApiServices;
-    private List<Integer> idBloodType;
-    private List<Integer> idGovernorates;
+    Unbinder unbinder;
 
     public NotificationsettingsFragment() {
         // Required empty public constructor
@@ -58,29 +65,21 @@ public class NotificationsettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SetUpAvtivity();
         View view = inflater.inflate(R.layout.fragment_notificationssettings, container, false);
-
-        ApiServices = RetrofitClient.getClient().create(API.class);
-
-        getUserNotificationData();
         unbinder = ButterKnife.bind(this, view);
+        ApiServices = RetrofitClient.getClient().create(API.class);
+        getDataBloodTypeAndGovernorates();
         return view;
     }
 
-    private void getUserNotificationData() {
-
-
-        String api_token = LoadData(getActivity(), USER_API_TOKEN);
-        idBloodType = new ArrayList<>();
-        idGovernorates = new ArrayList<>();
-        ApiServices.getnotifications_settings(api_token).enqueue(new Callback<NotificationsSettings>() {
+    public void getDataBloodTypeAndGovernorates() {
+        // get  PaginationData governorates
+        ApiServices.getnotifications_settings(SharedPreferencesManger.LoadData(getActivity(),USER_API_TOKEN)).enqueue(new Callback<NotificationsSettings>() {
             @Override
             public void onResponse(Call<NotificationsSettings> call, Response<NotificationsSettings> response) {
-
                 try {
-
                     if (response.body().getStatus() == 1) {
-
                         for (int i = 0; i < response.body().getData().getBloodTypes().size(); i++) {
                             idBloodType.add(Integer.valueOf(response.body().getData().getBloodTypes().get(i)));
                         }
@@ -94,8 +93,7 @@ public class NotificationsettingsFragment extends Fragment {
                     }
 
                 } catch (Exception e) {
-
-                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                    e.getMessage();
                 }
             }
 
@@ -104,16 +102,59 @@ public class NotificationsettingsFragment extends Fragment {
 
             }
         });
+
     }
 
+    // get data Blood_types
+    private void BloodTypes() {
+        // get data Blood_types
+        ApiServices.getbloodtype().enqueue(new Callback<GeneralResponse>() {
+            @Override
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
+                Log.d("response BloodTypes ", response.body().getMsg());
+                try {
+                    if (response.body().getStatus() == 1) {
+                        bloodTypeGeneratedModelArrayList.addAll(response.body().getData());
+                        adapterBloodTypeGridView = new AdapterGridView(getActivity(), bloodTypeGeneratedModelArrayList, idBloodType);
+                        settingNotificationFragmentBloodTypeGrid.setAdapter(adapterBloodTypeGridView);
+                    }
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    // get data governorates
     private void Governorate() {
 
+        // get data governorates
+        ApiServices.getgovernorates().enqueue(new Callback<GeneralResponse>() {
+            @Override
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
+                try {
+                    if (response.body().getStatus() == 1) {
+                        governortareGeneratedModelArrayList.addAll(response.body().getData());
+                        adapterGovernortGridView = new AdapterGridView(getActivity(), governortareGeneratedModelArrayList, idGovernorates);
+                        settingNotificationFragmentGovernortesGrid.setAdapter(adapterGovernortGridView);
+                    }
 
-    }
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+            }
 
-    private void BloodTypes() {
+            @Override
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
 
-
+            }
+        });
     }
 
     @Override
@@ -122,20 +163,24 @@ public class NotificationsettingsFragment extends Fragment {
         unbinder.unbind();
     }
 
+
     @OnClick(R.id.settingNotificationFragmentSaveBtn)
     public void onViewClicked() {
 
-// get data governorates
-        ApiServices.ChangeNotificationsSettings(LoadData(getActivity(), USER_API_TOKEN)
+        // get data governorates
+        ApiServices.ChangeNotificationsSettings(SharedPreferencesManger.LoadData(getActivity(),USER_API_TOKEN)
                 , adapterGovernortGridView.numCheck, adapterBloodTypeGridView.numCheck)
                 .enqueue(new Callback<NotificationsSettings>() {
                     @Override
                     public void onResponse(Call<NotificationsSettings> call, Response<NotificationsSettings> response) {
-                        Log.d("responses", LoadData(getActivity(), USER_API_TOKEN));
+                        Log.d("responses", SharedPreferencesManger.LoadData(getActivity(),USER_API_TOKEN));
 
                         try {
                             if (response.body().getStatus() == 1) {
                                 Toast.makeText(getActivity(), "Msg" + response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                                homeFragment homeFragment=new homeFragment();
+                                HelperMethods.replace(homeFragment,getActivity().getSupportFragmentManager(),
+                                        R.id.Activity_home_Frame,null,null);
                             } else {
                                 Toast.makeText(getActivity(), "Status" + response.body().getStatus(), Toast.LENGTH_SHORT).show();
                             }
@@ -148,8 +193,16 @@ public class NotificationsettingsFragment extends Fragment {
                     @Override
                     public void onFailure(Call<NotificationsSettings> call, Throwable t) {
                         Log.d("responsess", t.getMessage());
-                    }
-                });
+                    }});
     }
+
+    @Override
+    public void onBack() {
+        homeFragment homeFragment = new homeFragment();
+        HelperMethods.replace(homeFragment,getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
     }
+
+
 }
+
+

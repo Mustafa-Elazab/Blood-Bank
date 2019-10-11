@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/gray"
     >
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/Fragment_favourite_recyclerView"
         android:layout_width="match_parent"
@@ -14,7 +12,8 @@
         android:layout_marginStart="@dimen/dim_m"
         android:layout_marginEnd="@dimen/dim_m"
         android:layout_marginTop="@dimen/dim_m"
+        >
 
-        ></android.support.v7.widget.RecyclerView>
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

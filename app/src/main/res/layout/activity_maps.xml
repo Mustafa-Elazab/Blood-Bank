@@ -12,7 +12,9 @@
         android:layout_height="match_parent"
         android:id="@+id/Frame_replace_maps"
         android:background="@color/white"
-        ></FrameLayout>
+        >
+
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/Relative"

@@ -22,14 +22,13 @@ import android.widget.Toast;
 
 import com.example.mustafa.bloodbank.R;
 import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
-import com.example.mustafa.bloodbank.data.model.bloodtypes.Bloodtypes;
-import com.example.mustafa.bloodbank.data.model.cities.Cities;
-import com.example.mustafa.bloodbank.data.model.donation_request_create.DonationRequestCreate;
-import com.example.mustafa.bloodbank.data.model.governorates.Governorates;
+import com.example.mustafa.bloodbank.data.models.donate.AddNewDonate.AddNewDonate;
+import com.example.mustafa.bloodbank.data.models.gerneral.GeneralResponse;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
 import com.example.mustafa.bloodbank.helper.HelperMethods;
 import com.example.mustafa.bloodbank.ui.activity.MapsActivity;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
 import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.home.homeFragment;
 
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.U
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DonateRequsetFragment extends Fragment {
+public class DonateRequsetFragment extends BaseFragment {
 
 
     @BindView(R.id.Fragment_donate_request_ed_name)
@@ -75,7 +74,7 @@ public class DonateRequsetFragment extends Fragment {
     @BindView(R.id.Fragment_donate_request_btn_send)
     Button FragmentDonateRequestBtnSend;
     String patient_name, patient_age, patient_bloodtype, patient_phone, hospital_name, hospital_address, notes, bugs_number;
-    API ApiServices;
+    private API ApiServices;
     @BindView(R.id.Fragment_donate_request_sp_bloodtype)
     Spinner FragmentDonateRequestSpBloodtype;
     @BindView(R.id.Fragment_donate_request_ed_bloodbugs)
@@ -101,7 +100,6 @@ public class DonateRequsetFragment extends Fragment {
     private Integer city_id, blood_id;
     private Activity activity;
     private String latitude, longitude;
-
     Unbinder unbinder;
 
     public DonateRequsetFragment() {
@@ -113,25 +111,20 @@ public class DonateRequsetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SetUpAvtivity();
         View view = inflater.inflate(R.layout.fragment_donate_request, container, false);
         unbinder = ButterKnife.bind(this, view);
-
-
         FragmentDonateRequestImgMenu.setVisibility(View.INVISIBLE);
         FragmentDonateRequestImgNotifications.setVisibility(View.VISIBLE);
         FragmentDonateRequestImgBack.setVisibility(View.VISIBLE);
         FragmentDonateRequestToolBarTitle.setText("طلب التبرع ");
-
-
         latitude = SharedPreferencesManger.LoadData(getActivity(), LATITUDE);
         longitude = SharedPreferencesManger.LoadData(getActivity(), LONGITUDE);
-
         if (latitude == null && longitude == null) {
 
         } else {
             Toast.makeText(getActivity(), latitude + longitude, Toast.LENGTH_SHORT).show();
         }
-
         Toast.makeText(getActivity(), latitude + longitude, Toast.LENGTH_SHORT).show();
         ApiServices = RetrofitClient.getClient().create(API.class);
         getbloodtype();
@@ -170,7 +163,6 @@ public class DonateRequsetFragment extends Fragment {
         } else if (TextUtils.isEmpty(hospital_address)) {
             Toast.makeText(getActivity(), "Hospital Address is Requird", Toast.LENGTH_SHORT).show();
         } else {
-
             getDonationSend();
         }
 
@@ -193,17 +185,13 @@ public class DonateRequsetFragment extends Fragment {
         String api_token = SharedPreferencesManger.LoadData(getActivity(), USER_API_TOKEN);
         ApiServices.adddonaterequestcreate(api_token, patient_name, patient_age, blood_id, Integer.valueOf(bugs_number),
                 hospital_name, hospital_address, city_id, (patient_phone), notes, Double.valueOf(latitude), Double.valueOf(longitude)
-        ).enqueue(new Callback<DonationRequestCreate>() {
+        ).enqueue(new Callback<AddNewDonate>() {
             @Override
-            public void onResponse(Call<DonationRequestCreate> call, Response<DonationRequestCreate> response) {
-
+            public void onResponse(Call<AddNewDonate> call, Response<AddNewDonate> response) {
                 try {
-                    Log.i(TAG, "onResponse: ");
+                    Log.i("onResponse",response.body().getMsg());
                     if (response.body().getStatus() == 1) {
-
                         Toast.makeText(getActivity(), "Requset Done Upload .", Toast.LENGTH_SHORT).show();
-
-
                         FragmentDonateRequestEdName.getEditText().setText("");
                         FragmentDonateRequestEdAge.getEditText().setText("");
                         FragmentDonateRequestEdHospital.getEditText().setText("");
@@ -222,9 +210,9 @@ public class DonateRequsetFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DonationRequestCreate> call, Throwable t) {
+            public void onFailure(Call<AddNewDonate> call, Throwable t) {
 
-                Log.i(TAG, "onResponse: ");
+                Log.i(TAG, "onRespons");
 
             }
         });
@@ -234,9 +222,9 @@ public class DonateRequsetFragment extends Fragment {
 
     private void getbloodtype() {
 
-        ApiServices.getbloodtype().enqueue(new Callback<Bloodtypes>() {
+        ApiServices.getbloodtype().enqueue(new Callback<GeneralResponse>() {
             @Override
-            public void onResponse(Call<Bloodtypes> call, Response<Bloodtypes> response) {
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
 
                 if (response.body().getStatus() == 1) {
 
@@ -248,7 +236,6 @@ public class DonateRequsetFragment extends Fragment {
                         blood_ids.add(0);
 
                         for (int i = 0; i < response.body().getData().size(); i++) {
-
                             blood_type.add(response.body().getData().get(i).getName());
                             blood_ids.add(response.body().getData().get(i).getId());
 
@@ -259,9 +246,7 @@ public class DonateRequsetFragment extends Fragment {
                                 , blood_type);
 
                         FragmentDonateRequestSpBloodtype.setAdapter(adapter);
-
                         blood_id = blood_ids.get(FragmentDonateRequestSpBloodtype.getSelectedItemPosition());
-
 
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -270,37 +255,30 @@ public class DonateRequsetFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Bloodtypes> call, Throwable t) {
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
 
             }
         });
     }
 
     private void getGovermantes() {
-
-        ApiServices.getgovernorates().enqueue(new Callback<Governorates>() {
+        ApiServices.getgovernorates().enqueue(new Callback<GeneralResponse>() {
             @Override
-            public void onResponse(Call<Governorates> call, Response<Governorates> response) {
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
                 try {
                     if (response.body().getStatus() == 1) {
-
                         List<String> names = new ArrayList<>();
                         final List<Integer> ids = new ArrayList<>();
-
                         names.add(getResources().getString(R.string.goverminate));
                         ids.add(0);
-
                         for (int i = 0; i < response.body().getData().size(); i++) {
-
                             names.add(response.body().getData().get(i).getName());
                             ids.add(response.body().getData().get(i).getId());
                         }
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                                 android.R.layout.simple_spinner_item, names);
-
                         FragmentDonateRequestSpGov.setAdapter(adapter);
-
                         FragmentDonateRequestSpGov.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -311,56 +289,44 @@ public class DonateRequsetFragment extends Fragment {
                                     getCities(ids.get(position));
                                 }
                             }
-
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
-
                             }
                         });
 
                     }
 
                 } catch (Exception e) {
-
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Governorates> call, Throwable t) {
-
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
             }
         });
     }
 
     private void getCities(Integer id) {
-        ApiServices.getCity(id).enqueue(new Callback<Cities>() {
+        ApiServices.getCity(id).enqueue(new Callback<GeneralResponse>() {
             @Override
-            public void onResponse(Call<Cities> call, Response<Cities> response) {
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
                 try {
                     if (response.body().getStatus() == 1) {
-
                         List<String> names = new ArrayList<>();
                         city_ids = new ArrayList<>();
-
                         names.add(getResources().getString(R.string.city));
                         city_ids.add(0);
-
                         for (int i = 0; i < response.body().getData().size(); i++) {
-
                             names.add(response.body().getData().get(i).getName());
                             city_ids.add(response.body().getData().get(i).getId());
                         }
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                                 android.R.layout.simple_spinner_item, names);
-
                         FragmentDonateRequestSpCity.setAdapter(adapter);
-
                         city_id = city_ids.get(FragmentDonateRequestSpCity.getSelectedItemPosition());
-
-
-                    }
+                        }
 
                 } catch (Exception e) {
 
@@ -369,7 +335,7 @@ public class DonateRequsetFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Cities> call, Throwable t) {
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
 
             }
         });
@@ -388,17 +354,12 @@ public class DonateRequsetFragment extends Fragment {
 
 
             case R.id.Fragment_donate_request_img_location:
-
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
                 getActivity().startActivity(intent);
-
                 break;
 
             case R.id.Fragment_donate_request_btn_send:
-
                 CheckVariable();
-
-
                 break;
 
             case R.id.Fragment_donate_request_img_notifications:
@@ -406,7 +367,6 @@ public class DonateRequsetFragment extends Fragment {
                 HelperMethods.replace(notificationsFragment, getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
                 break;
             case R.id.Fragment_donate_request_img_back:
-
                 homeFragment homeFragment = new homeFragment();
                 HelperMethods.replace(homeFragment, getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
                 break;
@@ -416,9 +376,15 @@ public class DonateRequsetFragment extends Fragment {
 
     @OnClick(R.id.relative_write)
     public void onViewClicked() {
-
         HelperMethods.disappearKeypad(getActivity(),getView());
     }
+
+    @Override
+    public void onBack() {
+        homeFragment homeFragment = new homeFragment();
+        HelperMethods.replace(homeFragment,getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
+    }
+
 }
 
 

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -100,6 +101,17 @@ public class HelperMethods {
 
     }
 
+    public static void customToast(Activity activity,String title){
+
+        try{
+
+            Toast.makeText(activity, title, Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e){
+
+        }
+
+    }
     public static void dismissProgressDialog() {
 
         try {

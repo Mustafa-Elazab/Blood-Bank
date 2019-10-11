@@ -17,11 +17,12 @@ import android.widget.Toast;
 
 import com.example.mustafa.bloodbank.R;
 import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
-import com.example.mustafa.bloodbank.data.model.contact.Contact;
-import com.example.mustafa.bloodbank.data.model.settings.Settings;
+import com.example.mustafa.bloodbank.data.models.contactUs.ContactUs;
+import com.example.mustafa.bloodbank.data.models.settings.Settings;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
 import com.example.mustafa.bloodbank.helper.HelperMethods;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +37,7 @@ import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.U
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContactUsFragment extends Fragment {
+public class ContactUsFragment extends BaseFragment {
 
 
     @BindView(R.id.Fragment_contactus_tv_phone_api)
@@ -78,6 +79,7 @@ public class ContactUsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SetUpAvtivity();
         View view = inflater.inflate(R.layout.fragment_contactus, container, false);
         unbinder = ButterKnife.bind(this, view);
         ApiServices = RetrofitClient.getClient().create(API.class);
@@ -97,10 +99,8 @@ public class ContactUsFragment extends Fragment {
                     String email = response.body().getData().getEmail();
                     FragmentContactusTvPhoneApi.setText(phone);
                     FragmentContactusTvEmailApi.setText(email);
-
                 }
             }
-
             @Override
             public void onFailure(Call<Settings> call, Throwable t) {
 
@@ -152,9 +152,9 @@ public class ContactUsFragment extends Fragment {
         } else if (TextUtils.isEmpty(messageContent)) {
             Toast.makeText(getActivity(), "Content Requird!!", Toast.LENGTH_SHORT).show();
         } else {
-            ApiServices.addContact(SharedPreferencesManger.LoadData(getActivity(), USER_API_TOKEN), messageTitle, messageContent).enqueue(new Callback<Contact>() {
+            ApiServices.addContact(SharedPreferencesManger.LoadData(getActivity(), USER_API_TOKEN), messageTitle, messageContent).enqueue(new Callback<ContactUs>() {
                 @Override
-                public void onResponse(Call<Contact> call, Response<Contact> response) {
+                public void onResponse(Call<ContactUs> call, Response<ContactUs> response) {
 
                     if (response.body().getStatus() == 1) {
 
@@ -166,7 +166,7 @@ public class ContactUsFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<Contact> call, Throwable t) {
+                public void onFailure(Call<ContactUs> call, Throwable t) {
 
                 }
             });

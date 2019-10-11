@@ -11,12 +11,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.mustafa.bloodbank.R;
-import com.example.mustafa.bloodbank.adapter.NOTIFICATIONS_ADAPTER;
+import com.example.mustafa.bloodbank.adapter.NotificationsAdapter;
 import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
-import com.example.mustafa.bloodbank.data.model.notifications.DataNotify;
-import com.example.mustafa.bloodbank.data.model.notifications.Notifications;
+import com.example.mustafa.bloodbank.data.models.notifications.DataNotify;
+import com.example.mustafa.bloodbank.data.models.notifications.Notifications;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
+import com.example.mustafa.bloodbank.helper.HelperMethods;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
+import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.home.homeFragment;
 
 import java.util.List;
 
@@ -32,15 +35,11 @@ import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.U
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NotificationsFragment extends Fragment {
-
-
+public class NotificationsFragment extends BaseFragment {
     @BindView(R.id.Fragment_Notifications_rv)
     RecyclerView FragmentNotificationsRv;
-
     private API ApiServices;
-    private NOTIFICATIONS_ADAPTER adapter;
-
+    private NotificationsAdapter adapter;
     Unbinder unbinder;
 
     public NotificationsFragment() {
@@ -52,10 +51,9 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SetUpAvtivity();
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
-
         unbinder = ButterKnife.bind(this, view);
-
         ApiServices = RetrofitClient.getClient().create(API.class);
         SetupRecycler();
         getNotificationsData();
@@ -67,30 +65,23 @@ public class NotificationsFragment extends Fragment {
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         FragmentNotificationsRv.setLayoutManager(manager);
-        adapter = new NOTIFICATIONS_ADAPTER(getContext(), getActivity());
+        adapter = new NotificationsAdapter(getContext(), getActivity());
         FragmentNotificationsRv.setAdapter(adapter);
 
 
     }
 
     private void getNotificationsData() {
-
-        String api_token = "W4mx3VMIWetLcvEcyF554CfxjZHwdtQldbdlCl2XAaBTDIpNjKO1f7CHuwKl";
+        String api_token = SharedPreferencesManger.LoadData(getActivity(),USER_API_TOKEN);
         ApiServices.getnotifications(api_token).enqueue(new Callback<Notifications>() {
             @Override
             public void onResponse(Call<Notifications> call, Response<Notifications> response) {
-
                 try {
-
                     if (response.body().getStatus() == 1) {
-
-
                         Notifications body = response.body();
                         List<DataNotify> data = body.getDataNotifyPage().getData();
                         adapter.getData(data);
                         adapter.notifyDataSetChanged();
-
-
                     }
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -111,6 +102,10 @@ public class NotificationsFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
+    @Override
+    public void onBack() {
+        homeFragment homeFragment = new homeFragment();
+        HelperMethods.replace(homeFragment,getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
+    }
 
 }

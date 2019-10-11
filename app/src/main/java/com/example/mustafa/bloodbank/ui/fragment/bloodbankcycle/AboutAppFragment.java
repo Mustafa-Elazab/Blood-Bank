@@ -8,11 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mustafa.bloodbank.R;
+import com.example.mustafa.bloodbank.helper.HelperMethods;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
+import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.home.homeFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AboutAppFragment extends Fragment {
+public class AboutAppFragment extends BaseFragment {
 
 
     public AboutAppFragment() {
@@ -25,6 +28,11 @@ public class AboutAppFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_aboutapp, container, false);
+    }
+    @Override
+    public void onBack() {
+        homeFragment homeFragment = new homeFragment();
+        HelperMethods.replace(homeFragment,getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
     }
 
 }

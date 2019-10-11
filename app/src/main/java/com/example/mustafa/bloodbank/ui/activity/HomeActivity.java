@@ -1,10 +1,6 @@
 package com.example.mustafa.bloodbank.ui.activity;
 
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +8,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mustafa.bloodbank.data.model.notifications.DataNotify;
-import com.example.mustafa.bloodbank.data.model.notifications.Notifications;
-import com.example.mustafa.bloodbank.data.model.notificationscount.NotificationsCount;
-import com.example.mustafa.bloodbank.data.model.registertoken.RegisterToken;
-import com.example.mustafa.bloodbank.data.model.removetoken.RemoveToken;
+import com.example.mustafa.bloodbank.R;
+import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
+import com.example.mustafa.bloodbank.data.models.notifications.Notifications;
+import com.example.mustafa.bloodbank.data.models.notificationscount.NotificationsCount;
+import com.example.mustafa.bloodbank.data.models.publicresponse.PublicResponse;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
 import com.example.mustafa.bloodbank.helper.HelperMethods;
@@ -37,13 +31,8 @@ import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.EditProfileFragm
 import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.FavouriteFragment;
 import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.NotificationsFragment;
 import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.NotificationsettingsFragment;
-import com.example.mustafa.bloodbank.R;
-import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
-
 import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.home.homeFragment;
 import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +43,7 @@ import retrofit2.Response;
 
 import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.USER_API_TOKEN;
 
-public class HomeActivity extends AppCompatActivity
+public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.Activity_home_img_menu)
@@ -73,8 +62,8 @@ public class HomeActivity extends AppCompatActivity
     @BindView(R.id.notificationCount)
     TextView notificationCount;
     private API ApiServices;
-    private String Apitokens;
-    private String bodyMsg;
+    private String Apitokens = "";
+    private String bodyMsg="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,41 +77,28 @@ public class HomeActivity extends AppCompatActivity
         getApiNotifications();
         getFireBaseNotifications();
         removeFireBaseNotifications();
-        final String api_token=SharedPreferencesManger.LoadData(HomeActivity.this,USER_API_TOKEN);
-        Apitokens="W4mx3VMIWetLcvEcyF554CfxjZHwdtQldbdlCl2XAaBTDIpNjKO1f7CHuwKl";
+        Apitokens = SharedPreferencesManger.LoadData(HomeActivity.this, USER_API_TOKEN);
         ApiServices.getnotificationscount(Apitokens).enqueue(new Callback<NotificationsCount>() {
             @Override
             public void onResponse(Call<NotificationsCount> call, Response<NotificationsCount> response) {
-
-                try{
-
-                    if (response.body().getStatus()==1) {
-
-
-
-                            String getnotificationcount = String.valueOf(response.body().getData().getNotificationsCount());
-                            Toast.makeText(HomeActivity.this, api_token, Toast.LENGTH_SHORT).show();
-                            Toast.makeText(HomeActivity.this, getnotificationcount, Toast.LENGTH_SHORT).show();
-                            notificationCount.setText(getnotificationcount);
-
-
+                try {
+                    if (response.body().getStatus() == 1) {
+                        String getnotificationcount = String.valueOf(response.body().getData().getNotificationsCount());
+                        notificationCount.setText(getnotificationcount);
                     }
 
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     Toast.makeText(HomeActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<NotificationsCount> call, Throwable t) {
-
             }
         });
         if (savedInstanceState == null) {
             homeFragment homeFragment = new homeFragment();
             HelperMethods.replace(homeFragment, getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
-
         }
 
         drawer = findViewById(R.id.drawer_layout);
@@ -139,56 +115,44 @@ public class HomeActivity extends AppCompatActivity
 
     private void getApiNotifications() {
 
-        String api_token = "W4mx3VMIWetLcvEcyF554CfxjZHwdtQldbdlCl2XAaBTDIpNjKO1f7CHuwKl";
-        ApiServices.getnotifications(api_token).enqueue(new Callback<Notifications>() {
+        ApiServices.getnotifications(Apitokens).enqueue(new Callback<Notifications>() {
             @Override
             public void onResponse(Call<Notifications> call, Response<Notifications> response) {
-
                 try {
 
                     if (response.body().getStatus() == 1) {
-
-
                         Notifications body = response.body();
-
                         bodyMsg = body.getMsg();
-
-
                     }
                 } catch (Exception e) {
-                    Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();                }
+                    Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<Notifications> call, Throwable t) {
-
             }
         });
 
     }
 
-
-
     private void removeFireBaseNotifications() {
 
         String token = FirebaseInstanceId.getInstance().getToken();
 
-        ApiServices.RemoveToken(token,Apitokens).enqueue(
-                new Callback<RemoveToken>() {
+        ApiServices.RemoveToken(token, Apitokens).enqueue(
+                new Callback<PublicResponse>() {
                     @Override
-                    public void onResponse(Call<RemoveToken> call, Response<RemoveToken> response) {
-                        try{
+                    public void onResponse(Call<PublicResponse> call, Response<PublicResponse> response) {
+                        try {
 
-
-
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                     @Override
-                    public void onFailure(Call<RemoveToken> call, Throwable t) {
+                    public void onFailure(Call<PublicResponse> call, Throwable t) {
 
                     }
                 }
@@ -198,24 +162,24 @@ public class HomeActivity extends AppCompatActivity
     private void getFireBaseNotifications() {
 
         final String token = FirebaseInstanceId.getInstance().getToken();
-        ApiServices.getRegisterToken(token,Apitokens,"android")
-        .enqueue(new Callback<RegisterToken>() {
-            @Override
-            public void onResponse(Call<RegisterToken> call, Response<RegisterToken> response) {
-                try{
+        ApiServices.getRegisterToken(token, Apitokens, "android")
+                .enqueue(new Callback<PublicResponse>() {
+                    @Override
+                    public void onResponse(Call<PublicResponse> call, Response<PublicResponse> response) {
+                        try {
+                            if (response.body().getStatus()==1) {
+                                Toast.makeText(HomeActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<PublicResponse> call, Throwable t) {
 
-                }catch (Exception e){
-
-                    Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RegisterToken> call, Throwable t) {
-
-            }
-        });
+                    }
+                });
     }
 
     @Override
@@ -240,24 +204,26 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
 
-            ActivityHomeImgMenu.setVisibility(View.INVISIBLE);
+            ActivityHomeImgMenu.setVisibility(View.VISIBLE);
             ActivityHomeImgNotifications.setVisibility(View.INVISIBLE);
             ToolBarTitle.setText("تعديل البيانات");
             ActivityHomeFrame.setVisibility(View.INVISIBLE);
             notificationCount.setVisibility(View.INVISIBLE);
-            EditProfileFragment editProfileFragment = new EditProfileFragment();
-            HelperMethods.replace(editProfileFragment, getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
+            ActivityHomeImgBack.setVisibility(View.VISIBLE);
+            EditProfileFragment editProfile = new EditProfileFragment();
+            HelperMethods.replace(editProfile, getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
 
 
         }
 
         if (id == R.id.nav_notificat) {
 
-            ActivityHomeImgMenu.setVisibility(View.INVISIBLE);
+            ActivityHomeImgMenu.setVisibility(View.VISIBLE);
             ActivityHomeImgNotifications.setVisibility(View.INVISIBLE);
             ActivityHomeImgBack.setVisibility(View.VISIBLE);
             ToolBarTitle.setText("اعدادات الاشعارات");
             ActivityHomeFrame.setVisibility(View.INVISIBLE);
+            notificationCount.setVisibility(View.INVISIBLE);
             NotificationsettingsFragment notificationsettingsFragment = new NotificationsettingsFragment();
             HelperMethods.replace(notificationsettingsFragment, getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
 
@@ -265,7 +231,7 @@ public class HomeActivity extends AppCompatActivity
         }
         if (id == R.id.nav_favourite) {
 
-            ActivityHomeImgMenu.setVisibility(View.INVISIBLE);
+            ActivityHomeImgMenu.setVisibility(View.VISIBLE);
             ActivityHomeImgNotifications.setVisibility(View.INVISIBLE);
             ActivityHomeImgBack.setVisibility(View.VISIBLE);
             ToolBarTitle.setText("المفضلة");
@@ -285,6 +251,7 @@ public class HomeActivity extends AppCompatActivity
             ActivityHomeImgBack.setVisibility(View.INVISIBLE);
             ToolBarTitle.setText("");
             ActivityHomeFrame.setVisibility(View.INVISIBLE);
+            notificationCount.setVisibility(View.VISIBLE);
             homeFragment homeFragment = new homeFragment();
             HelperMethods.replace(homeFragment, getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
 
@@ -293,7 +260,7 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_contact) {
 
-            ActivityHomeImgMenu.setVisibility(View.INVISIBLE);
+            ActivityHomeImgMenu.setVisibility(View.VISIBLE);
             ActivityHomeImgNotifications.setVisibility(View.INVISIBLE);
             ActivityHomeImgBack.setVisibility(View.VISIBLE);
             ToolBarTitle.setText("اتصل بنا");
@@ -308,7 +275,7 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_aboutapp) {
 
-            ActivityHomeImgMenu.setVisibility(View.INVISIBLE);
+            ActivityHomeImgMenu.setVisibility(View.VISIBLE);
             ActivityHomeImgNotifications.setVisibility(View.INVISIBLE);
             ActivityHomeImgBack.setVisibility(View.VISIBLE);
             ToolBarTitle.setText("عن التطبيق");
@@ -372,17 +339,16 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.Activity_home_img_notifications:
 
-                NotificationsFragment notificationsFragment=new NotificationsFragment();
+                NotificationsFragment notificationsFragment = new NotificationsFragment();
                 ActivityHomeImgMenu.setVisibility(View.INVISIBLE);
                 ActivityHomeImgNotifications.setVisibility(View.INVISIBLE);
                 ActivityHomeImgBack.setVisibility(View.VISIBLE);
                 ToolBarTitle.setText("التنبيهات");
                 notificationCount.setVisibility(View.INVISIBLE);
                 ActivityHomeFrame.setVisibility(View.INVISIBLE);
-                HelperMethods.replace(notificationsFragment,getSupportFragmentManager(),R.id.frame_home_cycle,null,null);
+                HelperMethods.replace(notificationsFragment, getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
                 break;
             case R.id.Activity_home_img_back:
-
                 onBackPressed();
                 break;
         }

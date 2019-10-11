@@ -1,34 +1,29 @@
 package com.example.mustafa.bloodbank.adapter;
 
-import android.widget.BaseAdapter;
 import android.app.Activity;
 import android.content.Context;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.example.mustafa.bloodbank.R;
+import com.example.mustafa.bloodbank.data.models.gerneral.GeneralResponseData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class AdapterGridView extends BaseAdapter {
-
     private Context context;
     private LayoutInflater layoutInflater;
-    private List<GeneralData> generatedModelArrayList;
+    private List<GeneralResponseData> generatedModelArrayList;
 
     private List<Integer> idGovernorates_Blood;
-
-
     public List<Integer> numCheck = new ArrayList<>();
-
-
-    public AdapterGridView(Activity context, List<GeneralData> spinnerArrayList, List<Integer> idGovernorates_Blood) {
+    public AdapterGridView(Activity context, List<GeneralResponseData> spinnerArrayList, List<Integer> idGovernorates_Blood) {
         this.context = context;
         this.generatedModelArrayList = spinnerArrayList;
         this.idGovernorates_Blood = idGovernorates_Blood;
@@ -99,6 +94,5 @@ public class AdapterGridView extends BaseAdapter {
     class ViewHolder {
         CheckBox setAdapterGridChk;
     }
-
 
 }

@@ -28,6 +28,7 @@
     <string name="skip">تخطي</string>
     <string name="profile">معلوماتي</string>
     <string name="notifications">اعدادات الاشعارات</string>
+    <string name="notifications_count">عددالاشعارات</string>
     <string name="favourite">المفضلة</string>
     <string name="home">الرئسية</string>
     <string name="instructionssettings">تعليمات الاستخدام</string>
@@ -61,5 +62,7 @@
     <string name="donation_request">طلبات التبرع</string>
     <string name="patientname">اسم المريض</string>
     <string name="goverminate">المحافظة</string>
+    <string name="allGov">كل المحافظات</string>
+    <string name="AllBlood">كل الفصائل</string>
 
 </resources>

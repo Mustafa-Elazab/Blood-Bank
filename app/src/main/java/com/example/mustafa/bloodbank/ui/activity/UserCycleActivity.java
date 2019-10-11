@@ -1,14 +1,12 @@
 package com.example.mustafa.bloodbank.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.mustafa.bloodbank.R;
 import com.example.mustafa.bloodbank.helper.HelperMethods;
 import com.example.mustafa.bloodbank.ui.fragment.usercycle.LoginFragment;
-import com.example.mustafa.bloodbank.ui.fragment.usercycle.RegisterFragment;
 
-public class UserCycleActivity extends AppCompatActivity {
+public class UserCycleActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

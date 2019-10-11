@@ -4,8 +4,6 @@ package com.example.mustafa.bloodbank.ui.fragment.usercycle;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,14 +20,13 @@ import android.widget.Toast;
 
 import com.example.mustafa.bloodbank.R;
 import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
-import com.example.mustafa.bloodbank.data.model.bloodtypes.Bloodtypes;
-import com.example.mustafa.bloodbank.data.model.cities.Cities;
-import com.example.mustafa.bloodbank.data.model.governorates.Governorates;
-import com.example.mustafa.bloodbank.data.model.register.Register;
+import com.example.mustafa.bloodbank.data.models.gerneral.GeneralResponse;
+import com.example.mustafa.bloodbank.data.models.userData.Client;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
 import com.example.mustafa.bloodbank.helper.HelperMethods;
 import com.example.mustafa.bloodbank.ui.activity.HomeActivity;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,12 +45,12 @@ import retrofit2.Response;
 import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.USER_API_TOKEN;
 
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends BaseFragment {
 
     @BindView(R.id.Fragment_register_ed_name)
-    TextInputLayout FragmentRegisterEdName;
+    EditText FragmentRegisterEdName;
     @BindView(R.id.Fragment_register_ed_email)
-    TextInputLayout FragmentRegisterEdEmail;
+    EditText FragmentRegisterEdEmail;
     @BindView(R.id.Fragment_register_tv_birthdate)
     TextView FragmentRegisterTvBirthdate;
     @BindView(R.id.Fragment_register_sp_bloodtype)
@@ -66,11 +64,11 @@ public class RegisterFragment extends Fragment {
     @BindView(R.id.Fragment_register_rlt_sp_city)
     RelativeLayout FragmentRegisterRltSpCity;
     @BindView(R.id.Fragment_register_ed_phone)
-    TextInputLayout FragmentRegisterEdPhone;
+    EditText FragmentRegisterEdPhone;
     @BindView(R.id.Fragment_register_ed_password)
-    TextInputLayout FragmentRegisterEdPassword;
+    EditText FragmentRegisterEdPassword;
     @BindView(R.id.Fragment_register_ed_confirm_password)
-    TextInputLayout FragmentRegisterEdConfirmPassword;
+    EditText FragmentRegisterEdConfirmPassword;
     @BindView(R.id.Fragment_register_btn_register)
     Button FragmentRegisterBtnRegister;
     @BindView(R.id.relative_write)
@@ -78,7 +76,6 @@ public class RegisterFragment extends Fragment {
     private Unbinder unbinder;
     private String name, email, phone, password, confirm_password;
     private String donation_last_date, birth_date;
-
     private DatePickerDialog.OnDateSetListener get_date, get_date_last_donate;
     private Calendar calendar;
     private API APIServices;
@@ -98,6 +95,7 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
+        SetUpAvtivity();
         unbinder = ButterKnife.bind(this, view);
         APIServices = RetrofitClient.getClient().create(API.class);
         getClander();
@@ -177,9 +175,9 @@ public class RegisterFragment extends Fragment {
 
     private void getbloodtype() {
 
-        APIServices.getbloodtype().enqueue(new Callback<Bloodtypes>() {
+        APIServices.getbloodtype().enqueue(new Callback<GeneralResponse>() {
             @Override
-            public void onResponse(Call<Bloodtypes> call, Response<Bloodtypes> response) {
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
 
                 if (response.body().getStatus() == 1) {
 
@@ -229,7 +227,7 @@ public class RegisterFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Bloodtypes> call, Throwable t) {
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
 
             }
         });
@@ -237,9 +235,9 @@ public class RegisterFragment extends Fragment {
 
     private void getGovermantes() {
 
-        APIServices.getgovernorates().enqueue(new Callback<Governorates>() {
+        APIServices.getgovernorates().enqueue(new Callback<GeneralResponse>() {
             @Override
-            public void onResponse(Call<Governorates> call, Response<Governorates> response) {
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
                 try {
                     if (response.body().getStatus() == 1) {
 
@@ -288,24 +286,22 @@ public class RegisterFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Governorates> call, Throwable t) {
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
 
             }
         });
     }
 
     private void getCities(Integer id) {
-        APIServices.getCity(id).enqueue(new Callback<Cities>() {
+        APIServices.getCity(id).enqueue(new Callback<GeneralResponse>() {
             @Override
-            public void onResponse(Call<Cities> call, Response<Cities> response) {
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
                 try {
                     if (response.body().getStatus() == 1) {
 
                         final List<String> names = new ArrayList<>();
                         city_ids = new ArrayList<>();
-
-
-                        names.add("City");
+                        names.add("المدينة");
                         city_ids.add(0);
 
                         for (int i = 0; i < response.body().getData().size(); i++) {
@@ -348,7 +344,7 @@ public class RegisterFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Cities> call, Throwable t) {
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
 
             }
         });
@@ -374,11 +370,11 @@ public class RegisterFragment extends Fragment {
 
     public void onRegister() {
 
-        name = FragmentRegisterEdName.getEditText().getText().toString();
-        email = FragmentRegisterEdEmail.getEditText().getText().toString();
-        phone = FragmentRegisterEdPhone.getEditText().getText().toString();
-        password = FragmentRegisterEdPassword.getEditText().getText().toString();
-        confirm_password = FragmentRegisterEdConfirmPassword.getEditText().getText().toString();
+        name = FragmentRegisterEdName.getText().toString();
+        email = FragmentRegisterEdEmail.getText().toString();
+        phone = FragmentRegisterEdPhone.getText().toString();
+        password = FragmentRegisterEdPassword.getText().toString();
+        confirm_password = FragmentRegisterEdConfirmPassword.getText().toString();
         donation_last_date = FragmentRegisterTvLastDonate.getText().toString();
         birth_date = FragmentRegisterTvBirthdate.getText().toString();
 
@@ -428,37 +424,28 @@ public class RegisterFragment extends Fragment {
 
         APIServices.addregister(name, email, birth_date, city_id,
                 phone, donation_last_date, password, confirm_password, blood_id)
-                .enqueue(new Callback<Register>() {
+                .enqueue(new Callback<Client>() {
                              @Override
-                             public void onResponse(Call<Register> call, Response<Register> response) {
-
+                             public void onResponse(Call<Client> call, Response<Client> response) {
+                                 Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                                 try {
                                  if (response.body().getStatus() == 1) {
-
-
-                                     try {
                                          SharedPreferencesManger.SaveData(getActivity(), USER_API_TOKEN, response.body().getData()
                                                  .getApiToken());
                                          SharedPreferencesManger.SaveData(getActivity(), "PASSWORD", password);
-                                         SharedPreferencesManger.SaveData(getActivity(), "GOV_NAME", Gov_name);
-                                         SharedPreferencesManger.SaveData(getActivity(), "BLOOD_TYPE", Blood_type_name);
-                                         SharedPreferencesManger.SaveData(getActivity(), "CITY_NAME", City_name);
-
                                          HelperMethods.showProgressDialog(getActivity(), "انتظر قليلا");
-
                                          Intent intent = new Intent(getActivity(), HomeActivity.class);
                                          startActivity(intent);
                                          getActivity().finish();
 
-                                     } catch (Exception e) {
-
-                                         Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
                                      }
-
+                                     }catch (Exception e) {
+                                         Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
                                  }
                              }
 
                              @Override
-                             public void onFailure(Call<Register> call, Throwable t) {
+                             public void onFailure(Call<Client> call, Throwable t) {
 
                              }
                          }
@@ -467,7 +454,11 @@ public class RegisterFragment extends Fragment {
 
     @OnClick(R.id.relative_write)
     public void onViewClicked() {
-
         HelperMethods.disappearKeypad(getActivity(),getView());
     }
+
+    @Override
+    public void onBack() {
+        LoginFragment Fragment = new LoginFragment();
+        HelperMethods.replace(Fragment, getActivity().getSupportFragmentManager(), R.id.frame_user_cycle, null, null);    }
 }

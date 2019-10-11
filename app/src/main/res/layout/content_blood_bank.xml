@@ -5,15 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ui.activity.HomeActivity"
     tools:showIn="@layout/app_bar_blood_bank">
 
     <FrameLayout
         android:id="@+id/frame_home_cycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
     </FrameLayout>
 
 

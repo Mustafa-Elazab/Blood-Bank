@@ -10,16 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.mustafa.bloodbank.R;
-import com.example.mustafa.bloodbank.data.model.resetpassword.Resetpassword;
+import com.example.mustafa.bloodbank.data.models.resetpassword.Resetpassword;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
 import com.example.mustafa.bloodbank.helper.HelperMethods;
 import com.example.mustafa.bloodbank.ui.activity.HomeActivity;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,11 +32,8 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ForgetPassword2Fragment extends Fragment {
+public class ForgetPassword2Fragment extends BaseFragment {
 
-
-    @BindView(R.id.Login_image)
-    ImageView LoginImage;
     @BindView(R.id.Fragment_forget1_ed_phone)
     TextInputLayout FragmentForget1EdPhone;
     @BindView(R.id.Fragment_forget1_ed_password)
@@ -45,12 +42,11 @@ public class ForgetPassword2Fragment extends Fragment {
     TextInputLayout FragmentForget1EdConfirmPassword;
     @BindView(R.id.Fragment_forget1_btn_next)
     Button FragmentForget1BtnNext;
-    Unbinder unbinder;
     @BindView(R.id.relative_write)
     RelativeLayout relativeWrite;
+    Unbinder unbinder;
     private API APIServices;
     private Integer pinCodeForTest;
-
     public ForgetPassword2Fragment() {
         // Required empty public constructor
     }
@@ -60,6 +56,7 @@ public class ForgetPassword2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SetUpAvtivity();
         View view = inflater.inflate(R.layout.fragment_forget_password2, container, false);
         unbinder = ButterKnife.bind(this, view);
         APIServices = RetrofitClient.getClient().create(API.class);
@@ -92,8 +89,6 @@ public class ForgetPassword2Fragment extends Fragment {
                             } catch (Exception e) {
                                 Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
                             }
-
-
                         }
                     }
 
@@ -135,5 +130,11 @@ public class ForgetPassword2Fragment extends Fragment {
                 HelperMethods.disappearKeypad(getActivity(),getView());
                 break;
         }
+    }
+
+    @Override
+    public void onBack() {
+        ForgetPassword1Fragment fragment = new ForgetPassword1Fragment();
+        HelperMethods.replace(fragment, getActivity().getSupportFragmentManager(), R.id.frame_user_cycle, null, null);
     }
 }

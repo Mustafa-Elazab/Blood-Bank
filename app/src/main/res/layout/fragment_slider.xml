@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.splahcycle.SliderFragment"
     android:id="@+id/frame_slider">
 
  <RelativeLayout
@@ -17,20 +15,22 @@
          android:layout_height="match_parent"
          android:layout_alignParentTop="true"
          android:src="@drawable/slider"
-         android:layout_marginHorizontal="5sp"
-         android:layout_marginVertical="5sp"/>
+         android:layout_marginHorizontal="@dimen/dim_m"
+         android:layout_marginVertical="@dimen/dim_m"/>
 
      <Button
          android:id="@+id/slider_button"
          android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginStart="10sp"
-         android:layout_marginEnd="10sp"
-         android:layout_marginBottom="5sp"
+         android:layout_height="@dimen/dim_3xl"
+         android:layout_marginStart="@dimen/dim_2xl"
+         android:layout_marginEnd="@dimen/dim_2xl"
+         android:layout_marginBottom="@dimen/dim_l"
          android:background="@drawable/button_skip"
          android:text="تخطي"
+         android:textColor="@color/white"
+         android:textStyle="bold"
          android:textAllCaps="false"
-         android:textSize="20sp"
+         android:textSize="@dimen/txt_size_m"
          android:layout_alignParentBottom="true"
          />
 

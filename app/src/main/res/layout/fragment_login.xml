@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/splash">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,8 +36,11 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/edit_text_register"
                     android:hint="رقم الهاتف"
+                    android:imeOptions="actionNext"
                     android:inputType="phone"
-                    android:maxLines="1" />
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:padding="@dimen/dim_m" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -57,8 +59,11 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/edit_text_register"
                     android:hint="كلمة المرور"
+                    android:imeOptions="actionNext"
                     android:inputType="textWebPassword"
-                    android:maxLines="1" />
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:padding="@dimen/dim_m" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -111,10 +116,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/linear"
-                android:layout_marginStart="15sp"
-                android:layout_marginTop="15sp"
-                android:layout_marginEnd="15sp"
-                android:background="@drawable/button_skip"
+                android:layout_marginStart="@dimen/dim_l"
+                android:layout_marginTop="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_l"
+                android:background="#3AB54A"
                 android:text="Login"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -126,10 +131,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/Fragment_Login_btn_login"
-                android:layout_marginStart="15sp"
-                android:layout_marginTop="15sp"
-                android:layout_marginEnd="15sp"
-                android:background="@color/green"
+                android:layout_marginStart="@dimen/dim_l"
+                android:layout_marginTop="@dimen/dim_l"
+                android:layout_marginEnd="@dimen/dim_l"
+                android:background="@drawable/button_skip"
                 android:text="Register"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

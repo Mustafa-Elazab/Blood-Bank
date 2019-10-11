@@ -12,7 +12,7 @@ import com.example.mustafa.bloodbank.R;
 public class IMAGE_VIEW_PAGER extends PagerAdapter {
 
     private Context mContext;
-    private int[] images=new int[]{R.drawable.slider2,R.drawable.slider1};
+    private int[] images=new int[]{R.drawable.slider2,R.drawable.slider};
 
     public IMAGE_VIEW_PAGER(Context context){
         mContext=context;

@@ -3,13 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.bloodbankcycle.NotificationsFragment"
-    android:background="@drawable/splash"
     >
-
-
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/Fragment_Notifications_rv"
         android:layout_width="match_parent"

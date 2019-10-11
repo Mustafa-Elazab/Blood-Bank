@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.splashcycle.SplashActivity"
     android:background="@drawable/splash">
 
     <RelativeLayout
@@ -26,8 +25,6 @@
             android:text="@string/copy_right"
             android:textColor="@color/black"
             android:textStyle="bold"
-
             />
-
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

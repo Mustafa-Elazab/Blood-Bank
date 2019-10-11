@@ -1,5 +1,4 @@
-package com.ipd3.tech.bloodBank.project.helper.server;
-
+package com.example.mustafa.bloodbank.helper.server;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;

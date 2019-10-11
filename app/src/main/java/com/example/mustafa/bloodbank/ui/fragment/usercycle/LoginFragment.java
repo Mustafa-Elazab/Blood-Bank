@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,11 +18,12 @@ import android.widget.Toast;
 
 import com.example.mustafa.bloodbank.R;
 import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
-import com.example.mustafa.bloodbank.data.model.login.Login;
+import com.example.mustafa.bloodbank.data.models.userData.Client;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
 import com.example.mustafa.bloodbank.helper.HelperMethods;
 import com.example.mustafa.bloodbank.ui.activity.HomeActivity;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,17 +33,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.PASSWORD;
 import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.REMEBER;
 import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.USER_API_TOKEN;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends BaseFragment {
 
 
-    @BindView(R.id.Login_image)
-    ImageView LoginImage;
+//    @BindView(R.id.Login_image)
+//    ImageView LoginImage;
     @BindView(R.id.Fragment_Login_ed_phone)
     TextInputLayout LoginEdPhone;
     @BindView(R.id.Fragment_Login_ed_password)
@@ -73,11 +74,11 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SetUpAvtivity();
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
         unbinder = ButterKnife.bind(this, view);
-
         API = RetrofitClient.getClient().create(API.class);
-
         return view;
     }
 
@@ -87,17 +88,14 @@ public class LoginFragment extends Fragment {
         unbinder.unbind();
     }
 
-
     @OnClick(R.id.Fragment_Login_tv_forget_password)
     public void onLoginTvForgetPasswordClicked() {
-
         ForgetPassword1Fragment fragment = new ForgetPassword1Fragment();
         HelperMethods.replace(fragment, getActivity().getSupportFragmentManager(), R.id.frame_user_cycle, null, null);
     }
 
     @OnClick(R.id.Fragment_Login_btn_login)
     public void onLoginBtnLoginClicked() {
-
         Login_Phone_Number = LoginEdPhone.getEditText().getText().toString();
         Login_Password_Number = LoginEdPassword.getEditText().getText().toString();
         if (TextUtils.isEmpty(Login_Phone_Number)) {
@@ -109,17 +107,17 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    private void SignIn(String login_phone_number, String login_password_number) {
+    private void SignIn(String login_phone_number, final String login_password_number) {
 
-        Call<Login> call = API.addlogin(login_phone_number, login_password_number);
-        call.enqueue(new Callback<Login>() {
+        Call<Client> call = API.addlogin(login_phone_number, login_password_number);
+        call.enqueue(new Callback<Client>() {
             @Override
-            public void onResponse(Call<Login> call, Response<Login> response) {
-
+            public void onResponse(Call<Client> call, Response<Client> response) {
+                Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                 try {
-
                     if (response.body().getStatus() == 1) {
                         SharedPreferencesManger.SaveData(getActivity(), USER_API_TOKEN, response.body().getData().getApiToken());
+                        SharedPreferencesManger.SaveData(getActivity(), PASSWORD,login_password_number);
                         SharedPreferencesManger.SaveBoolean(getActivity(), REMEBER, LoginCheckRemember.isChecked());
                         Toast.makeText(getActivity(), "Done SignIN", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(), HomeActivity.class);
@@ -132,7 +130,7 @@ public class LoginFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Login> call, Throwable t) {
+            public void onFailure(Call<Client> call, Throwable t) {
 
             }
         });
@@ -150,5 +148,10 @@ public class LoginFragment extends Fragment {
     public void onViewClicked() {
 
         HelperMethods.disappearKeypad(getActivity(),getView());
+    }
+
+    @Override
+    public void onBack() {
+        getActivity().finish();
     }
 }

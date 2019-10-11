@@ -2,6 +2,7 @@ package com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,11 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mustafa.bloodbank.R;
-import com.example.mustafa.bloodbank.data.model.donation_request_create.DonationRequest;
-import com.example.mustafa.bloodbank.data.model.donationrequestnotifi.DonationRequestNotifi;
+import com.example.mustafa.bloodbank.data.local.SharedPreferencesManger;
+import com.example.mustafa.bloodbank.data.models.donate.DonateData;
+import com.example.mustafa.bloodbank.data.models.donationrequestnotifi.DonationRequestNotifi;
 import com.example.mustafa.bloodbank.data.rest.API;
 import com.example.mustafa.bloodbank.data.rest.RetrofitClient;
 import com.example.mustafa.bloodbank.helper.HelperMethods;
+import com.example.mustafa.bloodbank.ui.fragment.BaseFragment;
 import com.example.mustafa.bloodbank.ui.fragment.bloodbankcycle.home.homeFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,12 +44,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.mustafa.bloodbank.data.local.SharedPreferencesManger.USER_API_TOKEN;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailFragment extends Fragment {
+public class DetailFragment extends BaseFragment {
 
-    public DonationRequest donationsdata;
+    public DonateData donationsdata;
     @BindView(R.id.Fragment_detail_tv_name)
     TextView FragmentDetailTvName;
     @BindView(R.id.Fragment_detail_tv_age)
@@ -77,11 +82,10 @@ public class DetailFragment extends Fragment {
     private int returnResult = 0;
     private String getDonationRequestId;
     private GoogleMap googleMap;
-
     private Activity activity;
     Unbinder unbinder;
     private API ApiServices;
-    private String Api_token = "W4mx3VMIWetLcvEcyF554CfxjZHwdtQldbdlCl2XAaBTDIpNjKO1f7CHuwKl";
+    private String Api_token = "";
 
     public DetailFragment() {
         // Required empty public constructor
@@ -92,6 +96,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SetUpAvtivity();
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
         unbinder = ButterKnife.bind(this, view);
@@ -102,11 +107,9 @@ public class DetailFragment extends Fragment {
         FragmentDetailToolBarTitle.setText(donationsdata.getPatientName());
 
         ApiServices = RetrofitClient.getClient().create(API.class);
-//
-//      getDataReturnDetails();
-
+        Api_token=SharedPreferencesManger.LoadData(getActivity(),USER_API_TOKEN);
+        getDataReturnDetails();
         setDonationData();
-
 
         mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -120,6 +123,7 @@ public class DetailFragment extends Fragment {
         }
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
+            @SuppressLint("MissingPermission")
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
@@ -244,16 +248,11 @@ public class DetailFragment extends Fragment {
     }
 
     private void getDonationData(int getId) {
-
-
         ApiServices.getDontationRequestNotifi(Api_token, getId).enqueue(new Callback<DonationRequestNotifi>() {
             @Override
             public void onResponse(Call<DonationRequestNotifi> call, Response<DonationRequestNotifi> response) {
-
                 try {
-
                     if (response.body().getStatus() == 1) {
-
                         FragmentDetailTvName.setText("الاسم :" + response.body().getData().getPatientName());
                         FragmentDetailTvAge.setText("العمر :" + response.body().getData().getPatientAge());
                         FragmentDetailTvPhoneNumer.setText("رقم الهاتف :" + response.body().getData().getPhone());
@@ -262,7 +261,6 @@ public class DetailFragment extends Fragment {
                         FragmentDetailTvHospitalName.setText("اسم المستشفي :" + response.body().getData().getHospitalName());
                         FragmentDetailTvHospitalAddress.setText("عنوان المستشفي :" + response.body().getData().getHospitalAddress());
                         FragmentDetailTvNotes.setText("ملاحظات :" + response.body().getData().getNotes());
-
                     }
 
                 } catch (Exception e) {
@@ -276,5 +274,10 @@ public class DetailFragment extends Fragment {
             }
         });
 
+    }
+    @Override
+    public void onBack() {
+        homeFragment homeFragment = new homeFragment();
+        HelperMethods.replace(homeFragment,getActivity().getSupportFragmentManager(), R.id.frame_home_cycle, null, null);
     }
 }
